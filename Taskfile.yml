@@ -1,0 +1,30 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - task: list
+  list:
+    cmds:
+      - ls -d */ | fzf --preview 'cat {}/README.md'
+    aliases:
+      - ls
+  create:
+    interactive: true
+    cmds:
+      - cmd: |
+          read -p "What is OSS project name?:" PROJECT_NAME && 
+          test -z "$PROJECT_NAME" &&
+          mkdir -p "$PROJECT_NAME" &&          
+          echo "# ${PROJECT_NAME}" > "$PROJECT_NAME/README.md" &&
+          echo "Created $PROJECT_NAME/README.md"
+    silent: true
+    aliases:
+      - c
+      - new
+      - 'n'
