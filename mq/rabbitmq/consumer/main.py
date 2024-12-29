@@ -1,4 +1,5 @@
 import pika
+import time
 
 
 def main():
@@ -6,6 +7,7 @@ def main():
     channel = connection.channel()
 
     def callback(ch, method, properties, body):
+        time.sleep(5)
         print(f" [x] Received {body}")
 
     queue_name = 'hello'

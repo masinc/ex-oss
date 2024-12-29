@@ -18,7 +18,7 @@ services:
   consumer:
     build: consumer
     deploy:
-      replicas: 2
+      replicas: 3
     depends_on:
       mq:
         condition: service_healthy
