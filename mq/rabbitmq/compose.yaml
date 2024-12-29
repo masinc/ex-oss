@@ -1,0 +1,25 @@
+services:
+  mq:
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+  producer:
+    build: producer
+    depends_on:
+      mq:
+        condition: service_healthy
+  consumer:
+    build: consumer
+    deploy:
+      replicas: 2
+    depends_on:
+      mq:
+        condition: service_healthy
+
